@@ -1,0 +1,10 @@
+{% extends "WHMainBundle:Email:layout.html.twig" %}
+
+
+{% block body %}
+<h3>{{ 'Email.Welcom.titre'|trans({'%username%': entity.name}) }}</h3>
+
+<p class="lead">{{ 'Email.Welcom.soustitre'|trans }}</p>
+
+<p>{{ 'Email.Welcom.message'|trans }}</p>
+{% endblock %}

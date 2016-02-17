@@ -1,0 +1,4 @@
+services:
+#    wh_main.example:
+#        class: WH\MainBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

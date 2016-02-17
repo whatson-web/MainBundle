@@ -1,0 +1,17 @@
+{% extends "WHMainBundle:Email:layout.html.twig" %}
+
+
+{% block body %}
+<h3>{{ 'Email.Acces.titre'|trans({'%username%': entity.name}) }}</h3>
+
+<p class="lead">{{ 'Email.Acces.soustitre'|trans }}</p>
+
+<p>{{ 'Email.Acces.message'|trans }}</p>
+
+<p class="callout">
+    Votre login : <strong>{{ entity.email }}</strong><br/>
+    Votre mot de passe : <strong>{{ password }}</strong><br/>
+    Url: <a href="{{ webroot }}">{{ webroot }}</a>
+</p>
+
+{% endblock %}
