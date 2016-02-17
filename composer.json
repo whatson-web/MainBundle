@@ -1,0 +1,30 @@
+{
+    "name": "wh/main-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony WHMainBundle",
+    "keywords": ["Bckend application", "xml", "json", "api", "web service"],
+    "license": "GPL-3.0+",
+    "authors": [
+        {
+            "name": "Jérôme Lebleu",
+            "email": "jerome@whatson-web.com",
+            "homepage": "http://www.whatson-web.com"
+        },
+        {
+            "name": "Jean François Thuillier",
+            "email": "jf@whatson-web.com",
+            "homepage": "http://www.whatson-web.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.9",
+        "symfony/symfony": "2.7.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "WH\\MainBundle": ""
+        }
+    },
+    "target-dir": "WH/MainBundle",
+    "minimum-stability": "dev"
+}
