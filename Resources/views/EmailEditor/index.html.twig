@@ -1,0 +1,72 @@
+{% extends "CLDeposerBundle::layoutAdmin.html.twig" %}
+
+{% block meta_title %} {{ parent() }} - Liste des emails {% endblock %}
+
+{% block ariane %}
+    {{ parent() }}
+    <li><a href="{{ path('clad_deposer') }}">Emails</a></li>
+{% endblock %}
+
+
+{% block center %}
+
+
+    <div class="container">
+
+        <div class="well">
+
+            <h1>Gestion des emails envoyés aux clients</h1>
+
+            <p> </p>
+
+        </div>
+
+
+        {{ Smart.openTable('fa-list', 'Liste des emails') }}
+
+        <thead>
+        <tr>
+            <th></th>
+            <th>Nom de l'email</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for email in emails %}
+            <tr class="">
+                <td style="width: 80px;">
+                    <a href="{{ path('whad_email_editor_update', {'Email' : email}) }}" class="btn btn-xs btn-primary" {{ Smart.modal() }}><i class="fa fa-edit"></i></a>
+                    <a href="{{ path('whad_email_editor_test', {'Email' : email}) }}" class="btn btn-xs btn-info" target="_blank"><i class="fa fa-eye"></i></a>
+                </td>
+                <td>{{ email }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+        {{ Smart.closeTable() }}
+    </div>
+
+
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script type="application/javascript">
+
+        var popupSuccess = function (data) {
+
+            if($.isPlainObject(data)) {
+
+                window.location = data.redirect;
+
+            }else{
+
+                $('#modal .modal-content').html(data);
+
+            }
+
+
+        }
+
+    </script>
+{% endblock %}
+

@@ -1,0 +1,58 @@
+{% extends "WHAdminBundle::popup.html.twig" %}
+
+{% form_theme form 'WHAdminBundle:Form:bootstrap.html.twig' %}
+
+{% block title %} modifier un email {% endblock %}
+
+{% block body %}
+
+    {{ form_start(form, {'action': path('whad_email_editor_update', {'Email' : Email}), 'method': 'POST'}) }}
+
+    <div class="padded">
+
+        {{ form_row(form.Content, {'attr' : {'style' : 'min-height:450px'}}) }}
+
+    </div>
+
+    <div class="modal-footer">
+
+        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">
+            Annuler
+        </button>
+
+        <button type="submit" class="btn btn-primary" name="submited" value="">
+            Créer
+        </button>
+
+    </div>
+
+    {{ form_end(form) }}
+
+
+    <script>
+
+        /*
+        var form = $(".modal form");
+
+        $(form).submit(function() {
+
+            $.ajax({
+                type    : $(this).attr('method'),
+                url     : $(this).attr('action'),
+                data    : $(this).serialize(), // serializes the form's elements.
+                success: function(data)
+                {
+
+                    popupSuccess(data);
+
+                }
+            });
+
+            return false; // avoid to execute the actual submit of the form.
+        });
+        */
+
+
+    </script>
+
+{% endblock %}
