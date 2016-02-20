@@ -1,0 +1,16 @@
+{% extends "WHSmartAdminBundle::main_default.html.twig" %}
+
+{% block ariane %}{{ parent() }}<li><a href="{{ path('wh_admin_blog_posts') }}">Paramètres</a></li>{% endblock %}
+{% block title %}<i class="fa-fw fa fa-file-o"></i> Paramètres <span>> {% block subtitle %}Généraux{% endblock %}</span>{% endblock %}
+{% block title_right %}{% endblock %}
+
+{% block body %}
+
+    <div class="animated fadeInUp">
+
+        {% block content %}{% endblock %}
+
+    </div>
+
+{% endblock %}
+

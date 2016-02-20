@@ -1,0 +1,69 @@
+{% extends "WHMainBundle:Backend:main.html.twig" %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block ariane %}{{ parent() }}<li><a href="{{ path('wh_admin_blog_posts') }}">Généraux</a></li>{% endblock %}
+
+{% block subtitle %}Généraux{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+
+
+        {{ Smart.openBox() }}
+
+        <div class="widget-body">
+
+            {{ form_start(form) }}
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="col-md-2">Param</th>
+                        <th>Valeur</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                {% for param in parameters %}
+
+                    <tr>
+                        <td>{{ param.name }}</td>
+                        <td><input type="text" value="{{ param.value }}" name="parameters[{{ param.name }}]" class="form-control" /></td>
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="form-actions">
+
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+
+            </div>
+
+            {{ form_end(form) }}
+
+        </div>
+
+        {{ Smart.closeBox() }}
+
+
+
+
+
+    </div>
+
+
+
+{% endblock %}
+
+
+{% block javascript %}
+
+    {{ parent() }}
+
+    {{ Smart.modalSuccess() }}
+
+{% endblock %}

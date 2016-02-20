@@ -1,6 +1,6 @@
 <?php
 
-namespace WH\MainBundle\Controller;
+namespace WH\MainBundle\Controller\Backend;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +14,7 @@ class EmailEditorController extends Controller
 
     /**
      * Todo : Variabiliser la source email
+     * Il faut que se soit l'appel au template car il ira chercher celui de APP si il existe
      *
      */
     private $folder = '/../src/CL/MainBundle/Resources/views/Emails';
@@ -45,7 +46,7 @@ class EmailEditorController extends Controller
 
         }
 
-        return $this->render('WHSmartAdminBundle:EmailEditor:index.html.twig', array('emails' => $emails));
+        return $this->render('WHMainBundle:Backend:EmailEditor/index.html.twig', array('emails' => $emails));
 
     }
 
