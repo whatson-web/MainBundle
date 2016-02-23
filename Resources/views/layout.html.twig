@@ -29,9 +29,58 @@
 <body>
 
 <header>
+    <div class="menu-haut">
 
-    Menu
+        <nav class="navbar navbar-haut">
 
+            <div class="container">
+                <div class="collapse navbar-collapse" id="menu">
+                    <div class="barre-recherche">
+
+                        <div class="form-group">
+                            <input type="text" class="form-control">
+                        </div>
+
+                    </div>
+
+                    {{ knp_menu_render('APPMainBundle:Builder:menuHeaderHaut', {allow_safe_labels : true}) | raw }}
+
+                </div>
+
+
+
+            </div>
+
+        </nav>
+
+
+
+    </div>
+
+    <div class="container">
+
+        <a href="{{ path('wh_front_home')}}" class="navbar-brand">
+            <img src="{{ asset('front/images/logo.png') }}" alt=""/>
+        </a>
+
+        <div class="menu-bas">
+            <nav class="navbar navbar-default">
+
+                <div class="container-fluid">
+
+                    <div class="collapse navbar-collapse" id="menu">
+                        {{ knp_menu_render('APPMainBundle:Builder:menuHeader', {allow_safe_labels : true}) | raw }}
+                    </div>
+
+                </div>
+
+            </nav>
+
+        </div>
+
+
+
+    </div>
 </header>
 
 {% block body %}{% endblock %}
