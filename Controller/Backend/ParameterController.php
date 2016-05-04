@@ -24,7 +24,7 @@ class ParameterController extends Controller
     public function indexAction(Request $request)
     {
 
-        $file = $this->get('kernel')->getRootDir().'/config/parameters.yml';
+        $file = $this->get('kernel')->getRootDir() . '/config/parameters.yml';
 
         $form = $this->createFormBuilder()->getForm();
 
@@ -32,11 +32,11 @@ class ParameterController extends Controller
 
         $tab = array();
 
-        foreach($array['parameters'] as $k => $v) {
+        foreach ($array['parameters'] as $k => $v) {
 
             $tab[] = array(
-                'name' => $k,
-                'value'=> $v
+                'name'  => $k,
+                'value' => $v
             );
 
         }
@@ -45,32 +45,23 @@ class ParameterController extends Controller
 
             $params['parameters'] = $request->request->get('parameters');
 
-
             $dumper = new Dumper();
 
             $yaml = $dumper->dump($params, 2);
 
             file_put_contents($file, $yaml);
 
-
             return $this->redirect($request->headers->get('referer'));
-
         }
 
-
-
-
-
-
-        return $this->render('WHMainBundle:Backend:Parameter/index.html.twig', array(
+        return $this->render(
+            'WHMainBundle:Backend:Parameter/index.html.twig',
+            array(
                 'parameters' => $tab,
                 'form'       => $form->createView()
             )
         );
     }
-
-
-
 
 
 }
