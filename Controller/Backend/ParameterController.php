@@ -5,10 +5,11 @@ namespace WH\MainBundle\Controller\Backend;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Dumper;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * @Route("/admin/parameter")
@@ -16,52 +17,72 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class ParameterController extends Controller
 {
 
+	/**
+	 * @Route("/", name="wh_admin_parameters" )
+	 * @return mixed
+	 */
+	public function indexAction(Request $request)
+	{
 
-    /**
-     * @Route("/", name="wh_admin_parameters" )
-     * @return mixed
-     */
-    public function indexAction(Request $request)
-    {
+		$file = $this->get('kernel')->getRootDir() . '/config/parameters.yml';
 
-        $file = $this->get('kernel')->getRootDir() . '/config/parameters.yml';
+		$form = $this->createFormBuilder()->getForm();
 
-        $form = $this->createFormBuilder()->getForm();
+		$array = Yaml::parse($file);
 
-        $array = Yaml::parse($file);
+		$tab = array();
 
-        $tab = array();
+		foreach ($array['parameters'] as $k => $v) {
 
-        foreach ($array['parameters'] as $k => $v) {
+			$tab[] = array(
+				'name'  => $k,
+				'value' => $v,
+			);
+		}
 
-            $tab[] = array(
-                'name'  => $k,
-                'value' => $v
-            );
+		if ($request->getMethod() == 'POST') {
 
-        }
+			$params['parameters'] = $request->request->get('parameters');
 
-        if ($request->getMethod() == 'POST') {
+			$dumper = new Dumper();
 
-            $params['parameters'] = $request->request->get('parameters');
+			$yaml = $dumper->dump($params, 2);
 
-            $dumper = new Dumper();
+			file_put_contents($file, $yaml);
 
-            $yaml = $dumper->dump($params, 2);
+			// Suppression du cache dev & prod
+			$kernel = $this->get('kernel');
 
-            file_put_contents($file, $yaml);
+			$application = new Application($kernel);
+			$application->setAutoExit(false);
 
-            return $this->redirect($request->headers->get('referer'));
-        }
+			$input = new ArrayInput(
+				array(
+					'command' => 'cache:clear',
+					'--env'   => 'prod',
+				)
+			);
+			$output = new NullOutput();
+			$application->run($input, $output);
 
-        return $this->render(
-            'WHMainBundle:Backend:Parameter/index.html.twig',
-            array(
-                'parameters' => $tab,
-                'form'       => $form->createView()
-            )
-        );
-    }
+			$input = new ArrayInput(
+				array(
+					'command' => 'cache:clear',
+				)
+			);
+			$output = new NullOutput();
+			$application->run($input, $output);
 
+			return $this->redirect($request->headers->get('referer'));
+		}
+
+		return $this->render(
+			'WHMainBundle:Backend:Parameter/index.html.twig',
+			array(
+				'parameters' => $tab,
+				'form'       => $form->createView(),
+			)
+		);
+	}
 
 }
